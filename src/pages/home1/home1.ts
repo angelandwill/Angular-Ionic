@@ -18,11 +18,11 @@ export class Home1 {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.members=[
-    {index:"3",title:"guming",date:"2017-4-20",Author:"unknown",Agree:true},
-    {index:"1",title:"jinpo",date:"2017-4-1",Author:"unknown",Agree:true},
-    {index:"5",title:"changkai",date:"2017-3-10",Author:"unknown",Agree:true},
-    {index:"2",title:"guojie",date:"2016-4-20",Author:"unknown",Agree:true},
-    {index:"8",title:"zhangfeng",date:"2017-2-20",Author:"unknown",Agree:true}
+    {index:"3",title:"DWC AO project presentation",date:"2017-4-20",Author:"guming",Agree:500,thumbnai:"assets/Image/guming.png"},
+    {index:"1",title:"handsome man, handsome man",date:"2017-4-1",Author:"jinpo",Agree:20,thumbnai:"assets/Image/jinpo.png"},
+    {index:"5",title:"wish to work at home",date:"2017-3-10",Author:"changkai",Agree:13,thumbnai:"assets/Image/changkai.png"},
+    {index:"2",title:"study hard and hard",date:"2016-4-20",Author:"guojie",Agree:222,thumbnai:"assets/Image/guojie.png"},
+    {index:"8",title:"always meeting all day",date:"2017-2-20",Author:"zhangfeng",Agree:35,thumbnai:"assets/Image/zhangfeng.png"}
     ]
   }
 
@@ -82,7 +82,7 @@ export class Home1 {
       function(a, b) {
         let A = Math.random()*100;        
         let B =  Math.random()*100;
-              
+
         if (A < B) {
           return -1;
         }

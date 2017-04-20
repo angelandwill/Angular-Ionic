@@ -39,12 +39,23 @@
 
   <ion-list *ngFor="let member of members">
     <ion-item>
-      <ion-avatar item-left>
-        <img src="assets/Image/favicon.ico">
-      </ion-avatar>
-      <p> {{member.index}} </p>
-      <h2>{{ member.title }}</h2>    
-      <h3>{{member.date}}</h3>
+        <ion-thumbnail item-left>
+          <img src="{{member.thumbnai}}">
+        </ion-thumbnail>
+        <ion-row>
+          <ion-col><h1 style="color:darkcyan"> {{member.Author}} </h1></ion-col>
+          <!--<ion-col><p> {{member.index}} </p></ion-col> -->
+        </ion-row>
+        <h2>{{ member.title }}</h2>    
+        <p style="padding-top:1em"></p>
+        <ion-row>
+          <ion-col col-6>
+            {{member.date}}
+          </ion-col>
+          <ion-col col-6>
+            <ion-icon name="thumbs-up"></ion-icon>{{member.Agree}}
+          </ion-col>
+        </ion-row>
       </ion-item>
   </ion-list>
 </ion-content>
