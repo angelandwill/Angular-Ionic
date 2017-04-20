@@ -94,6 +94,11 @@ export class Home1 {
     );
   }
 
+  addAgree(agreeIndex:number)
+  {
+    console.log(agreeIndex);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad Home1');
   }

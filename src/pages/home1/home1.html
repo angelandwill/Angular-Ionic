@@ -47,13 +47,13 @@
           <!--<ion-col><p> {{member.index}} </p></ion-col> -->
         </ion-row>
         <h2>{{ member.title }}</h2>    
-        <p style="padding-top:1em"></p>
+        <p style="padding-top:0.3em"></p>
         <ion-row>
           <ion-col col-6>
             {{member.date}}
           </ion-col>
           <ion-col col-6>
-            <ion-icon name="thumbs-up"></ion-icon>{{member.Agree}}
+            <ion-icon (click)="addAgree(22)" name="thumbs-up" style="padding-right:5px; color:chartreuse"></ion-icon>{{member.Agree}}
           </ion-col>
         </ion-row>
       </ion-item>
