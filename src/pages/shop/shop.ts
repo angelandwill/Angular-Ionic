@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
 
 import { ShopService } from "../../providers/shop-provider"
+
+import { Cart } from "../cart/cart"
 
 
 /**
@@ -17,48 +20,96 @@ import { ShopService } from "../../providers/shop-provider"
 })
 export class Shop {
 
-  products:Array<any>
+  //products:Array<any>
 
+  //currentCartCount:any
   currentProduct:any
-  object:any={
-    productName:"",
-    price:"",
-    amount:""
+
+  cartPage:any=Cart
+
+  constructor(public navCtrl: NavController, public modalCtrl:ModalController, public navParams: NavParams,private shopServ:ShopService,public viewCtrl:ViewController) {
+
+    this.findProducts()
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private shopServ:ShopService,public viewCtrl:ViewController) {
+  addCount(id){
+    this.shopServ.products.find(p=>p.objectId==id).amount+=1
+  }
 
-    this.shopServ.findClasses("Product").then(
+  minusCount(id){
+    this.shopServ.products.find(p=>p.objectId==id).amount<=0? 0:this.shopServ.products.find(p=>p.objectId==id).amount-=1
+  }
+
+  findProducts(){
+      this.shopServ.findClasses("ProductSales").then(
       data=>{
         if(data&&data.json().results){
-          this.products = data.json().results
-          //console.log(data.json().results)
+          this.shopServ.products = data.json().results
+          
+          this.shopServ.currentCartCount = 0 //this.products.filter(p=>p.amount>0).length
+          
+          this.shopServ.carts.splice(0,this.shopServ.carts.length)
+          this.shopServ.products.filter(p=>p.amount>0).forEach(data=>{
+
+            this.shopServ.currentCartCount+=data.amount
+            this.shopServ.carts.push(data)
+          })
         }
-    })  
+    })
   }
 
-  addToCart(product?)
+  addToCart(prd?)
   {
-    //console.log("11111")
-    
-    console.log(product)
-    //this.currentProduct=this.navParams.data.product
-    if(product){
-      
-      this.object.productName = product.productName
-      this.object.price="5.5"
-      this.object.amount="1"
-    }
-    
-    this.shopServ.saveClass("Cart",this.object).then(data=>{
-      console.log(data)
-      //this.object.objectId = data.json().objectId
-      //this.object.createdAt = data.json().createAt
-      //this.viewCtrl.dismiss(this.object)
-        }).catch(err=>{
+    /*
+    this.shopServ.saveClass("Cart",cart).then(data=>{
+      cart.objectId = data.json().objectId  
+      this.shopServ.carts.push(cart)
+      }).catch(err=>{
       console.log(err)
-    })
- 
+    })*/
+
+    if(prd){
+        
+        let updatePrd:any={
+          amount:0
+        }
+
+        updatePrd.amount=prd.amount
+
+        this.shopServ.updateClass("ProductSales",prd.objectId,updatePrd).then(data=>{
+          //this.shopServ.products["amount"]=prd.amount
+        }).catch(err=>{
+        console.log(err)
+      })
+    }
+
+    if(!this.shopServ.carts.find(p=>p.objectId==prd.objectId))
+    {
+      this.shopServ.carts.push(prd)
+    }
+    else
+    {
+      this.shopServ.carts.find(p=>p.objectId==prd.objectId).amount=prd.amount
+    }
+
+    this.getAmount()
+  }
+
+  goToCartPage()
+  {
+    //console.log("2222")
+    let opts:any = {}
+    let currentCartPage = this.modalCtrl.create(this.cartPage,opts)
+    
+    currentCartPage.present()
+  }
+
+  getAmount()
+  {
+    this.shopServ.currentCartCount=0
+    this.shopServ.products.filter(p=>p.amount>0).forEach(data=>{
+            this.shopServ.currentCartCount+=data.amount
+          })
   }
 
   ionViewDidLoad() {

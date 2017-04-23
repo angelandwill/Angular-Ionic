@@ -7,12 +7,27 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>cart</ion-title>
-  </ion-navbar>
+    <ion-title item-left>购物车</ion-title>
+  
+    <ion-buttons end>
+      <button ion-button color="primary" (click)="backToShop()" >返回</button>
+    </ion-buttons>
 
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-item *ngFor = "let cart of shopServ.carts">
+    <ion-row>
+        <ion-col col-3>产品：<p style="color:darkcyan; font-size:0.4em; padding-top:2em;">{{cart.productName}}</p></ion-col>
+        <ion-col col-3>单价：<p style="color:darkcyan; font-size:0.4em; padding-top:2em;">{{cart.price}}</p></ion-col>
+        <ion-col col-3>数量：<p style="color:darkcyan; font-size:0.4em; padding-top:2em;">{{cart.amount}}</p></ion-col>
+        <ion-col col-3>
+          <ion-buttons end>
+            <button ion-button color="danger" style="width:5em; height:2.5em; margin-top:2em;" (click)="deleteFromCart(cart)">删除</button>
+          </ion-buttons>
+        </ion-col>
+    </ion-row>
+  </ion-item>
 </ion-content>

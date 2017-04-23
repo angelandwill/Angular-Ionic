@@ -7,24 +7,47 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>shop</ion-title>
-  </ion-navbar>
 
+        <ion-title item-left>商店</ion-title>
+
+        <ion-buttons end>
+        <button ion-button (click)="goToCartPage()" >
+          <ion-icon style="font-size:2em; color:cadetblue" name="md-cart"></ion-icon>
+          <ion-badge item-right>{{shopServ.currentCartCount}}</ion-badge>
+          </button>
+        </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-  <ion-item *ngFor="let product of products" > 
+<ion-content>
+  <ion-item *ngFor="let product of shopServ.products" > 
     <ion-thumbnail item-left>
-          <img src="">
+          <img src="{{product.productPhoto}}" style="width:7em; height:7em;">
     </ion-thumbnail>
     <ion-row>
         <ion-col><h3 style="color:darkcyan">{{product.productName}}</h3></ion-col>
     </ion-row>
     <p style="padding-top:0.3em"></p>
     <ion-row>
-    <ion-col col-6>{{product.productDesc}}</ion-col>
-    <ion-col col-6><button ion-button (click)="addToCart($event)">购买</button></ion-col>
+    <ion-col col-8>{{product.productDesc}}</ion-col>
+    <ion-col col-4>
+      <p style="font-size:1.5em">{{product.price}} 元</p>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-7> 
+        <ion-item no-lines>
+        <button ion-fab mini item-left (click)="addCount(product.objectId)"><ion-icon name="add"></ion-icon></button>
+        <div style="font-size:1em; text-align:center;">{{product.amount}}</div>
+        <button ion-fab mini item-right (click)="minusCount(product.objectId)"><ion-icon name="remove"></ion-icon></button>
+        </ion-item>
+      </ion-col> 
+      <ion-col col-5>
+        <ion-buttons end>
+          <button style="width:5em; height:2em; margin-top:15px; margin-right:15px;" ion-button (click)="addToCart(product)">购买</button>
+        </ion-buttons>
+      </ion-col>
     </ion-row>
   </ion-item>
 </ion-content>
